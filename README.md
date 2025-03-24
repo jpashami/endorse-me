@@ -1,3 +1,2 @@
 # endorse-me
-
-[Edit in StackBlitz next generation editor ⚡️](https://stackblitz.com/~/github.com/jpashami/endorse-me)
+Endorse-me is a Decentralized Social Trust Platform designed to foster trust by leveraging the power of decentralized technology to establish and enhance social credibility. The Endorse-me bot seamlessly integrates into the Telegram ecosystem, allowing users to endorse, review endorsements, and disapprove users. Simply enter a Telegram username followed by predefined commands to perform actions and receive live responses directly from the platform.
