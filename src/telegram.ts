@@ -98,12 +98,12 @@ export const sendBotCommand = async (command: string, username: string, category
     
     // Construct the command message
     let message = `${command} ${formattedUsername}`;
-    if (command === '/endorse' && category) {
-      message += ` [${category}]`;
-      if (note) {
-        message += ` - ${note}`;
-      }
-    }
+    //if (command === '/endorse' && category) {
+    //  message += ` [${category}]`;
+    //  if (note) {
+    //    message += ` - ${note}`;
+    //  }
+   // }
 
     // Use the Telegram Bot API directly
     const response = await fetch(`https://api.telegram.org/bot${config.telegramBot.token}/sendMessage`, {
