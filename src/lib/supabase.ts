@@ -25,6 +25,7 @@ export type Endorsement = {
   category_id: number;
   note: string | null;
   endorsed_by: string;
+  trust_level: number;
   timestamp: string;
 };
 
@@ -60,7 +61,8 @@ export async function createEndorsement(
   username: string,
   category: string,
   note: string | null,
-  endorsed_by: string
+  endorsed_by: string,
+  trust_level: number
 ) {
   try {
     // First, get the category ID
@@ -82,7 +84,8 @@ export async function createEndorsement(
           username,
           category_id: categoryData.id,
           note,
-          endorsed_by
+          endorsed_by,
+          trust_level
         }
       ])
       .select()

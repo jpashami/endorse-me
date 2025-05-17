@@ -65,6 +65,7 @@ function App() {
   const [telegramId, setTelegramId] = useState('');
   const [category, setCategory] = useState('Money exchange');
   const [note, setNote] = useState('');
+  const [trustLevel, setTrustLevel] = useState('3'); // Default trust level
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
@@ -83,6 +84,13 @@ function App() {
     'Professional skills',
     'Personal character',
     'Community contribution'
+  ];
+
+  const trustLevels = [
+    { value: '1', label: 'Level 1 - Basic Trust' },
+    { value: '2', label: 'Level 2 - Moderate Trust' },
+    { value: '3', label: 'Level 3 - High Trust' },
+    { value: '4', label: 'Level 4 - Complete Trust' }
   ];
 
   useEffect(() => {
@@ -123,20 +131,22 @@ function App() {
       // Format username if needed
       const username = telegramId.startsWith('@') ? telegramId : `@${telegramId}`;
       
-      // Create endorsement in database
+      // Create endorsement in database with trust level
       await createEndorsement(
         username,
         category,
         note.trim() || null,
-        currentUser.username
+        currentUser.username,
+        parseInt(trustLevel)
       );
 
-      // Send the endorse command with category and note
-      await sendBotCommand('/endorse', username, category, note.trim() || undefined);
+      // Send the endorse command with category, note, and trust level
+      await sendBotCommand('/endorse', username, category, `${note.trim() || ''} [Trust Level: ${trustLevel}]`);
 
-      setSuccess(`Endorsement request sent for ${username}`);
+      setSuccess(`Endorsement request sent for ${username} with Trust Level ${trustLevel}`);
       setTelegramId('');
       setNote('');
+      setTrustLevel('3'); // Reset to default trust level
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');
     } finally {
@@ -272,6 +282,24 @@ function App() {
                 {categories.map((cat) => (
                   <option key={cat} value={cat}>
                     {cat}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label htmlFor="trustLevel" className="block text-sm font-medium text-gray-700 mb-2">
+                Trust Level
+              </label>
+              <select
+                id="trustLevel"
+                value={trustLevel}
+                onChange={(e) => setTrustLevel(e.target.value)}
+                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 bg-white"
+              >
+                {trustLevels.map((level) => (
+                  <option key={level.value} value={level.value}>
+                    {level.label}
                   </option>
                 ))}
               </select>
